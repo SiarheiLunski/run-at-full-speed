@@ -1,0 +1,34 @@
+{
+  "name": "save-belarus",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "parcel public/index.html --public-url='./'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SiarheiLunski/save-belarus.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SiarheiLunski/save-belarus/issues"
+  },
+  "homepage": "https://github.com/SiarheiLunski/save-belarus#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.7.0",
+    "@typescript-eslint/parser": "^4.7.0",
+    "eslint": "^7.13.0",
+    "html-webpack-plugin": "^4.5.0",
+    "parcel-bundler": "^1.12.4",
+    "ts-loader": "^8.0.11",
+    "typescript": "^4.0.5"
+  },
+  "dependencies": {
+    "phaser": "^3.24.1"
+  },
+  "source": {
+
+  }
+}
