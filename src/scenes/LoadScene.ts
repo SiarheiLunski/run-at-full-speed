@@ -1,6 +1,10 @@
 import * as Phraser from 'phaser';
 import { SCENES } from '../constants';
+import images from '../../public/assets/images/*.png';
+import audio from '../../public/assets/audio/*.mp3';
 
+console.log(audio);
+console.log(images);
 export class LoadScene extends Phraser.Scene {
   constructor() {
     super({
@@ -9,12 +13,12 @@ export class LoadScene extends Phraser.Scene {
   }
 
   preload(): void {
-    this.load.image('background', 'assets/images/background.png');
-    this.load.image('ground', 'assets/images/ground.png');
-    this.load.image('start_button', 'assets/images/start.png');
-    this.load.image('player', 'assets/images/player.png');
-    this.load.image('enemy', 'assets/images/enemy.png');
-    // this.load.audio('bg_music', 'assets/audio/peremen.mp3');
+    this.load.image('background', images.background);
+    this.load.image('ground', images.ground);
+    this.load.image('start_button', images.start);
+    this.load.image('player', images.player);
+    this.load.image('enemy', images.enemy);
+    this.load.audio('bg_music', audio.peremen);
 
     const loadingBar = this.add.graphics({
       y: -3,

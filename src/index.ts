@@ -4,7 +4,7 @@ import { MenuScene } from './scenes/MenuScene';
 import { GameScene } from './scenes/GameScene';
 
 const gameConfig: Phaser.Types.Core.GameConfig = {
-  title: 'Simple Game',
+  title: 'Run at Full Speed',
   width: 640,
   height: 360,
   backgroundColor: 0xffffff,

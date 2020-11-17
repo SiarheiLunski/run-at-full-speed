@@ -1,21 +1,21 @@
 {
-  "name": "save-belarus",
+  "name": "run-at-full-speed",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "parcel public/index.html --public-url='./'"
+    "start": "parcel serve public/index.html"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SiarheiLunski/save-belarus.git"
+    "url": "git+https://github.com/SiarheiLunski/run-at-full-speed.git"
   },
-  "author": "",
+  "author": "Siarhei Lunski <loonskai@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/SiarheiLunski/save-belarus/issues"
+    "url": "https://github.com/SiarheiLunski/run-at-full-speed/issues"
   },
-  "homepage": "https://github.com/SiarheiLunski/save-belarus#readme",
+  "homepage": "https://github.com/SiarheiLunski/run-at-full-speed#readme",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.7.0",
     "@typescript-eslint/parser": "^4.7.0",
