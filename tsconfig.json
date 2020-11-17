@@ -16,9 +16,10 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
   },
   "include": [
     "./src",
+    "./typings"
   ]
 }
