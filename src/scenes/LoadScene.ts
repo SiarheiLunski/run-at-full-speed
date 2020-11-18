@@ -3,6 +3,7 @@ import { SCENES } from '../constants';
 
 import images from '../../public/assets/images/*.png';
 import audio from '../../public/assets/audio/*.mp3';
+import spritesheets from '../../public/assets/spritesheets/*.png';
 
 export class LoadScene extends Phraser.Scene {
   constructor() {
@@ -20,6 +21,16 @@ export class LoadScene extends Phraser.Scene {
     /* Load all audio from /assets/audio */
     Object.entries(audio).forEach(([name, filePath]) => {
       this.load.audio(name, filePath as string);
+    });
+
+    /* Load all spritesheets from /assets/spritesheets */
+    this.load.spritesheet('player', spritesheets.player as string, {
+      frameWidth: 60,
+      frameHeight: 60
+    });
+    this.load.spritesheet('enemy', spritesheets.enemy as string, {
+      frameWidth: 60,
+      frameHeight: 100
     });
 
     const loadingBar = this.add.graphics({

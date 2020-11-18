@@ -9,9 +9,7 @@ export class GameScene extends Phraser.Scene {
   private enemies: Phaser.GameObjects.Group;
 
   constructor() {
-    super({
-      key: SCENES.GAME
-    });
+    super({ key: SCENES.GAME });
   }
 
   create(): void {
@@ -20,12 +18,12 @@ export class GameScene extends Phraser.Scene {
     this.ground.scaleX = 2;
 
     this.physics.add.existing(this.ground, true);
-    
+
     this.player = new Player({
       scene: this,
       x: 100,
       y: 300,
-      key: 'player',
+      key: 'player'
     });
 
     this.enemies = this.add.group({ runChildUpdate: true });
@@ -38,7 +36,6 @@ export class GameScene extends Phraser.Scene {
         key: 'enemy',
         speed: -(Math.random() * (100 - 50) + 50)
       }));
-  
     }, 2000);
 
     this.physics.add.collider(this.ground, this.player);

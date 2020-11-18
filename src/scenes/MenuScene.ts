@@ -10,7 +10,7 @@ export class MenuScene extends Phraser.Scene {
 
   create(): void {
     this.add.image(0, 0, 'background').setOrigin(0, 0);
-    this.sound.play('bg_music', { loop: true });
+    // this.sound.play('bg_music', { loop: true });
 
     const startButton = this.add.image(this.game.renderer.width / 2, this.game.renderer.height / 2, 'start_button');
     startButton.setInteractive();

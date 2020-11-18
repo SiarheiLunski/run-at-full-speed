@@ -2,11 +2,11 @@ import * as Phraser from 'phaser';
 
 export class Player extends Phaser.Physics.Arcade.Sprite {
   private currentScene: Phraser.Scene
-  private keys: Map<string, Phaser.Input.Keyboard.Key>
-  
-  body: any;
+  private keys: Map<string, Phaser.Input.Keyboard.Key>  
   private isJumping: boolean;
   private isDying: boolean;
+
+  public body: Phraser.Physics.Arcade.Body;
 
   constructor(params: any) {
     super(params.scene, params.x, params.y, params.key, params.frame);
@@ -20,6 +20,15 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.setOrigin(0.5, 0.5);
     this.setFlipX(false);
 
+    this.currentScene.anims.create({
+      key: 'player_run',
+      frameRate: 8,
+      repeat: -1,
+      frames: this.currentScene.anims.generateFrameNumbers('player', {
+        frames: [0,1,2,3,4,5]
+      })
+    });
+
     this.keys = new Map([
       ['LEFT', this.addKey('LEFT')],
       ['RIGHT', this.addKey('RIGHT')],
@@ -30,6 +39,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.currentScene.physics.world.enable(this);
     this.body.maxVelocity.x = 50;
     this.body.maxVelocity.y = 300;
+
+    this.play('player_run');
   }
 
   private addKey(key: string): Phaser.Input.Keyboard.Key {
@@ -51,8 +62,10 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
     if (this.keys.get('RIGHT')?.isDown) {
       this.x += 128 * (delta / 1000);
+      this.setFlipX(false);
     } else if (this.keys.get('LEFT')?.isDown) {
       this.x -= 128 * (delta / 1000);
+      this.setFlipX(true);
     }
 
     if (this.keys.get('JUMP')?.isDown && !this.isJumping) {

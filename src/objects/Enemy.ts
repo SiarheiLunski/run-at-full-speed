@@ -3,8 +3,9 @@ import * as Phraser from 'phaser';
 export class Enemy extends Phraser.GameObjects.Sprite {
   private currentScene: Phraser.Scene
   private speed: number;
-  body: any;
   private isDying: boolean;
+
+  public body: Phraser.Physics.Arcade.Body;
 
   constructor(params: any) {
     super(params.scene, params.x, params.y, params.key, params.frame);
@@ -16,7 +17,20 @@ export class Enemy extends Phraser.GameObjects.Sprite {
   }
 
   private initSprite() {
+    this.currentScene.anims.create({
+      key: 'enemy_run',
+      frameRate: 8,
+      repeat: -1,
+      frames: this.currentScene.anims.generateFrameNumbers('enemy', {
+        frames: [0,1,2,3,4,5]
+      })
+    });
+
+    this.scale = 0.6;
+    this.setFlipX(true);
     this.currentScene.physics.world.enable(this);
+
+    this.play('enemy_run');
   }
 
   update(): void {

@@ -16,11 +16,11 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: { y: 455 },
+      gravity: { y: 700 },
       debug: true
     }
   },
-  render: { pixelArt: false, antialias: false }
+  render: { pixelArt: true, antialias: false }
 };
 
 export const game = new Phraser.Game(gameConfig);
