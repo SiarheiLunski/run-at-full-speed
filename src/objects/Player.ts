@@ -1,4 +1,5 @@
 import * as Phraser from 'phaser';
+import { PLAYER_ANIMATIONS } from '../constants';
 
 export class Player extends Phaser.Physics.Arcade.Sprite {
   private currentScene: Phraser.Scene
@@ -17,15 +18,41 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   private initSprite() {
+    this.scale = 0.5;
     this.setOrigin(0.5, 0.5);
     this.setFlipX(false);
 
     this.currentScene.anims.create({
-      key: 'player_run',
+      key: PLAYER_ANIMATIONS.RUN,
       frameRate: 8,
       repeat: -1,
       frames: this.currentScene.anims.generateFrameNumbers('player', {
-        frames: [0,1,2,3,4,5]
+        frames: [6,7,8,9,10,11]
+      })
+    });
+
+    this.currentScene.anims.create({
+      key: PLAYER_ANIMATIONS.IDLE,
+      frames: this.currentScene.anims.generateFrameNumbers('player', {
+        frames: [0]
+      })
+    });
+
+    this.currentScene.anims.create({
+      key: PLAYER_ANIMATIONS.JUMP,
+      frameRate: 8,
+      repeat: -1,
+      frames: this.currentScene.anims.generateFrameNumbers('player', {
+        frames: [12,13,14,15,16,17]
+      })
+    });
+
+    this.currentScene.anims.create({
+      key: PLAYER_ANIMATIONS.LAND,
+      frameRate: 8,
+      repeat: -1,
+      frames: this.currentScene.anims.generateFrameNumbers('player', {
+        frames: [18,19,20,21,22,23]
       })
     });
 
@@ -39,8 +66,6 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.currentScene.physics.world.enable(this);
     this.body.maxVelocity.x = 50;
     this.body.maxVelocity.y = 300;
-
-    this.play('player_run');
   }
 
   private addKey(key: string): Phaser.Input.Keyboard.Key {
@@ -63,14 +88,17 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     if (this.keys.get('RIGHT')?.isDown) {
       this.x += 128 * (delta / 1000);
       this.setFlipX(false);
+      this.play(PLAYER_ANIMATIONS.RUN);
     } else if (this.keys.get('LEFT')?.isDown) {
       this.x -= 128 * (delta / 1000);
       this.setFlipX(true);
+      this.play(PLAYER_ANIMATIONS.RUN);
     }
 
     if (this.keys.get('JUMP')?.isDown && !this.isJumping) {
       this.body.setVelocityY(-300);
       this.isJumping = true;
+      this.play(PLAYER_ANIMATIONS.JUMP);
     }
   }
 

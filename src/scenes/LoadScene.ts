@@ -25,8 +25,8 @@ export class LoadScene extends Phraser.Scene {
 
     /* Load all spritesheets from /assets/spritesheets */
     this.load.spritesheet('player', spritesheets.player as string, {
-      frameWidth: 60,
-      frameHeight: 60
+      frameWidth: 120,
+      frameHeight: 120
     });
     this.load.spritesheet('enemy', spritesheets.enemy as string, {
       frameWidth: 60,

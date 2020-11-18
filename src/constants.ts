@@ -3,3 +3,11 @@ export const SCENES = {
   MENU: 'MENU_SCENE',
   GAME: 'GAME_SCENE',
 };
+
+export const PLAYER_ANIMATIONS = {
+  IDLE: 'PLAYER_IDLE',
+  RUN: 'PLAYER_RUN',
+  JUMP: 'PLAYER_JUMP',
+  LAND: 'PLAYER_LAND',
+  DAMAGE: 'PLAYER_DAMAGE'
+};
