@@ -52,8 +52,8 @@ export class GameScene extends Phraser.Scene {
     );
   }
 
-  update(time: number, delta: number): void {
-    this.player?.update(time, delta);
+  update(): void {
+    this.player?.update();
   }
   
   private handlePlayerEnemyOverlap(_player: any, _enemy: any): void {

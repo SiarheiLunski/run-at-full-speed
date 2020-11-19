@@ -6,6 +6,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   private keys: Map<string, Phaser.Input.Keyboard.Key>  
   private isJumping: boolean;
   private isDying: boolean;
+  private velocity: number;
 
   public body: Phraser.Physics.Arcade.Body;
 
@@ -19,6 +20,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
   private initSprite() {
     this.scale = 0.5;
+    this.velocity = 200;
     this.setOrigin(0.5, 0.5);
     this.setFlipX(false);
 
@@ -27,7 +29,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       frameRate: 8,
       repeat: -1,
       frames: this.currentScene.anims.generateFrameNumbers('player', {
-        frames: [6,7,8,9,10,11]
+        start: 6,
+        end: 11
       })
     });
 
@@ -43,7 +46,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       frameRate: 8,
       repeat: -1,
       frames: this.currentScene.anims.generateFrameNumbers('player', {
-        frames: [12,13,14,15,16,17]
+        start: 12,
+        end: 17
       })
     });
 
@@ -52,7 +56,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       frameRate: 8,
       repeat: -1,
       frames: this.currentScene.anims.generateFrameNumbers('player', {
-        frames: [18,19,20,21,22,23]
+        start: 18,
+        end: 23
       })
     });
 
@@ -64,7 +69,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     ]);
 
     this.currentScene.physics.world.enable(this);
-    this.body.maxVelocity.x = 50;
+    this.body.maxVelocity.x = this.velocity;
     this.body.maxVelocity.y = 300;
   }
 
@@ -72,11 +77,12 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     return this.currentScene.input.keyboard.addKey(key);
   }
 
-  update(time: number, delta: number): void {
-    this.handleInput(delta);
+  update(): void {
+    this.handleInput();
+    this.handleAnimations();
   }
 
-  private handleInput(delta: number) {
+  private handleInput() {
     if (
       this.body.onFloor() ||
       this.body.touching.down ||
@@ -86,19 +92,37 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     if (this.keys.get('RIGHT')?.isDown) {
-      this.x += 128 * (delta / 1000);
+      this.body.velocity.x = this.velocity;
       this.setFlipX(false);
-      this.play(PLAYER_ANIMATIONS.RUN);
     } else if (this.keys.get('LEFT')?.isDown) {
-      this.x -= 128 * (delta / 1000);
+      this.body.velocity.x = -this.velocity;
       this.setFlipX(true);
-      this.play(PLAYER_ANIMATIONS.RUN);
+    } else {
+      this.body.setVelocityX(0);
+      this.body.setAccelerationX(0);
     }
 
     if (this.keys.get('JUMP')?.isDown && !this.isJumping) {
       this.body.setVelocityY(-300);
       this.isJumping = true;
-      this.play(PLAYER_ANIMATIONS.JUMP);
+    }
+  }
+
+  private handleAnimations() {
+    if (this.body.velocity.y !== 0) {
+      if (this.body.velocity.y > 0) {
+        this.anims.play(PLAYER_ANIMATIONS.LAND, true);
+      } else {
+        this.anims.play(PLAYER_ANIMATIONS.JUMP, true);
+      }
+    } else if (this.body.velocity.x !== 0) {
+      if (this.body.velocity.x > 0) {
+        this.anims.play(PLAYER_ANIMATIONS.RUN, true);
+      } else {
+        this.anims.play(PLAYER_ANIMATIONS.RUN, true);
+      }
+    } else {
+      this.setFrame(0);
     }
   }
 
