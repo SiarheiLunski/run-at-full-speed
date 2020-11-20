@@ -69,7 +69,7 @@ export class GameScene extends Phraser.Scene {
           _enemy.isDead();
         }
       });
-      // _enemy.gotHitOnHead();
+      _enemy.gotHitOnHead();
       // this.add.tween({
       //   targets: _enemy,
       //   props: { alpha: 0 },

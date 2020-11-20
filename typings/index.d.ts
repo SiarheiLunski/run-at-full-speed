@@ -7,3 +7,8 @@ declare module '*.mp3' {
   const value: any;
   export = value;
 }
+
+declare module '*.fnt' {
+  const value: any;
+  export = value;
+}

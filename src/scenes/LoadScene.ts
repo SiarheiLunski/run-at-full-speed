@@ -4,12 +4,11 @@ import { SCENES } from '../constants';
 import images from '../../public/assets/images/*.png';
 import audio from '../../public/assets/audio/*.mp3';
 import spritesheets from '../../public/assets/spritesheets/*.png';
-
+import fontsPNG from '../../public/assets/fonts/*.png';
+import fontsFNT from '../../public/assets/fonts/*.fnt';
 export class LoadScene extends Phraser.Scene {
   constructor() {
-    super({
-      key: SCENES.LOAD
-    });
+    super({ key: SCENES.LOAD });
   }
 
   preload(): void {
@@ -23,11 +22,14 @@ export class LoadScene extends Phraser.Scene {
       this.load.audio(name, filePath as string);
     });
 
+    this.load.bitmapFont('main', fontsPNG.main, fontsFNT.main);
+
     /* Load all spritesheets from /assets/spritesheets */
     this.load.spritesheet('player', spritesheets.player as string, {
       frameWidth: 60,
       frameHeight: 60
     });
+
     this.load.spritesheet('enemy', spritesheets.enemy as string, {
       frameWidth: 40,
       frameHeight: 70

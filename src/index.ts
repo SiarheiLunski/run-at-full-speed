@@ -1,6 +1,7 @@
 import * as Phraser from 'phaser';
 import { LoadScene } from './scenes/LoadScene';
 import { MenuScene } from './scenes/MenuScene';
+import { HUDScene } from './scenes/HUDScene';
 import { GameScene } from './scenes/GameScene';
 
 const gameConfig: Phaser.Types.Core.GameConfig = {
@@ -8,7 +9,7 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
   width: 640,
   height: 360,
   backgroundColor: 0xffffff,
-  scene: [LoadScene, MenuScene, GameScene],
+  scene: [LoadScene, MenuScene, HUDScene, GameScene],
   type: Phaser.AUTO,
   input: {
     keyboard: true

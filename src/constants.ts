@@ -1,7 +1,12 @@
 export const SCENES = {
   LOAD: 'LOAD_SCENE',
   MENU: 'MENU_SCENE',
+  HUD: 'HUD_SCENE',
   GAME: 'GAME_SCENE',
+};
+
+export const REGISTRY_KEYS = {
+  SCORE: 'SCORE'
 };
 
 export const PLAYER_ANIMATIONS = {
