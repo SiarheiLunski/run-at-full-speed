@@ -22,11 +22,11 @@ export class Enemy extends Phraser.GameObjects.Sprite {
       frameRate: 8,
       repeat: -1,
       frames: this.currentScene.anims.generateFrameNumbers('enemy', {
-        frames: [0,1,2,3,4,5]
+        start: 0,
+        end: 5
       })
     });
 
-    this.scale = 0.6;
     this.setFlipX(true);
     this.currentScene.physics.world.enable(this);
 

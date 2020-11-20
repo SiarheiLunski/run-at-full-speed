@@ -19,7 +19,6 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   private initSprite() {
-    this.scale = 0.5;
     this.velocity = 200;
     this.setOrigin(0.5, 0.5);
     this.setFlipX(false);
@@ -70,7 +69,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.currentScene.physics.world.enable(this);
     this.body.maxVelocity.x = this.velocity;
-    this.body.maxVelocity.y = 300;
+    this.body.maxVelocity.y = 400;
   }
 
   private addKey(key: string): Phaser.Input.Keyboard.Key {
@@ -103,7 +102,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     if (this.keys.get('JUMP')?.isDown && !this.isJumping) {
-      this.body.setVelocityY(-300);
+      this.body.setVelocityY(-400);
       this.isJumping = true;
     }
   }
