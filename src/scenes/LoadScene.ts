@@ -22,7 +22,8 @@ export class LoadScene extends Phraser.Scene {
       this.load.audio(name, filePath as string);
     });
 
-    this.load.bitmapFont('main', fontsPNG.main, fontsFNT.main);
+    this.load.bitmapFont('red', fontsPNG.red, fontsFNT.red);
+    this.load.bitmapFont('white', fontsPNG.white, fontsFNT.white);
 
     /* Load all spritesheets from /assets/spritesheets */
     this.load.spritesheet('player', spritesheets.player as string, {

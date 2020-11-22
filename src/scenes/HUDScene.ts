@@ -9,8 +9,8 @@ export class HUDScene extends Phaser.Scene {
 
   create(): void {
     this.textElements = new Map([
-      [TEXT_ELEMENTS_KEYS.LIVES, this.addText(20, 8, `${this.registry.get(REGISTRY_KEYS.LIVES)}`)],
-      [TEXT_ELEMENTS_KEYS.SCORE, this.addText(20, 32, this.getScoreFormatted())],
+      [TEXT_ELEMENTS_KEYS.LIVES, this.addText(20, 8, `${this.registry.get(REGISTRY_KEYS.LIVES)}`, 'red')],
+      [TEXT_ELEMENTS_KEYS.SCORE, this.addText(20, 32, this.getScoreFormatted(), 'white')],
     ]);
 
     const level = this.scene.get(SCENES.GAME);
@@ -38,9 +38,10 @@ export class HUDScene extends Phaser.Scene {
   private addText(
     x: number,
     y: number,
-    value: string
+    value: string,
+    font: string
   ): Phaser.GameObjects.BitmapText {
-    return this.add.bitmapText(x, y, 'main', value, 24);
+    return this.add.bitmapText(x, y, font, value, 24);
   }
 
   private getScoreFormatted(): string {
