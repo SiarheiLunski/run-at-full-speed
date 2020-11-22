@@ -169,7 +169,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     });
   }
 
-  public gotHit(): void {
+  public gotHit({ onDie }: any): void {
     this.isVulnerable = false;
 
     if (this.hitCounter === 0) {
@@ -183,6 +183,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       this.body.checkCollision.down = false;
       this.body.checkCollision.left = false;
       this.body.checkCollision.right = false;
+
+      onDie();
     } else {
       this.hitCounter -= 1;
       this.scene.sound.play('hit');
