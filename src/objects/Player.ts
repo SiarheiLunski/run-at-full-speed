@@ -173,6 +173,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.isVulnerable = false;
 
     if (this.hitCounter === 0) {
+      // const livesLeft = this.currentScene.registry.get(REGISTRY_KEYS.LIVES);
+      // console.log(livesLeft);
       this.isDying = true;
       this.currentScene.events.emit(EVENTS.DECREASE_LIVES);
       this.hitCounter = 2;

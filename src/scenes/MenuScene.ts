@@ -6,7 +6,8 @@ export class MenuScene extends Phraser.Scene {
     super({ key: SCENES.MENU });
   }
 
-  init(): void {
+  init(data: any): void {
+    console.log(data);
     this.initGlobalDataManager();
   }
 

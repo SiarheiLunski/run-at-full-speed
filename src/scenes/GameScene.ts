@@ -8,6 +8,7 @@ export class GameScene extends Phraser.Scene {
   private ground: Phaser.GameObjects.Sprite;
   private enemies: Phaser.GameObjects.Group;
   public spawnInterval: number;
+  public restartTimeout: number;
 
   constructor() {
     super({ key: SCENES.GAME });
@@ -56,6 +57,15 @@ export class GameScene extends Phraser.Scene {
       undefined,
       this
     );
+
+    this.events.on('shutdown', () => {
+      window.clearTimeout(this.restartTimeout);
+      window.clearInterval(this.spawnInterval);
+    });
+    this.events.on('destroy', () => {
+      window.clearTimeout(this.restartTimeout);
+      window.clearInterval(this.spawnInterval);
+    });
   }
 
   update(): void {
@@ -69,9 +79,8 @@ export class GameScene extends Phraser.Scene {
     } else if (player.isVulnerable) {
       player.gotHit({
         onDie: () => {
-          setTimeout(() => {
+          this.restartTimeout = window.setTimeout(() => {
             this.scene.restart();
-            window.clearInterval(this.spawnInterval);
           }, 1500);
         }
       });
