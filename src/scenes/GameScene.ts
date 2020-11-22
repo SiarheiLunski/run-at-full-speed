@@ -8,7 +8,6 @@ export class GameScene extends Phraser.Scene {
   private ground: Phaser.GameObjects.Sprite;
   private enemies: Phaser.GameObjects.Group;
   public spawnInterval: number;
-  public restartTimeout: number;
 
   constructor() {
     super({ key: SCENES.GAME });
@@ -59,11 +58,9 @@ export class GameScene extends Phraser.Scene {
     );
 
     this.events.on('shutdown', () => {
-      window.clearTimeout(this.restartTimeout);
       window.clearInterval(this.spawnInterval);
     });
     this.events.on('destroy', () => {
-      window.clearTimeout(this.restartTimeout);
       window.clearInterval(this.spawnInterval);
     });
   }
@@ -77,13 +74,7 @@ export class GameScene extends Phraser.Scene {
       player.bounceUpAfterHitEnemyOnHead();
       enemy.gotHitOnHead();
     } else if (player.isVulnerable) {
-      player.gotHit({
-        onDie: () => {
-          this.restartTimeout = window.setTimeout(() => {
-            this.scene.restart();
-          }, 1500);
-        }
-      });
+      player.gotHit();
     }
     // player got hit from the side or on the head
     // if (_player.isVulnerable) {

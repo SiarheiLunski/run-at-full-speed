@@ -6,12 +6,9 @@ export class MenuScene extends Phraser.Scene {
   constructor() {
     super({ key: SCENES.MENU });
   }
-
-  init(): void {
-    this.initGlobalDataManager();
-  }
-
+  
   create(data: MenuSceneParams): void {
+    this.initGlobalDataManager();
     this.sound.stopAll();
     this.add.image(0, 0, 'menu_background').setOrigin(0, 0);
     if (data?.hasOwnProperty('score')) {
@@ -27,6 +24,7 @@ export class MenuScene extends Phraser.Scene {
     startButton.y = this.game.renderer.height / 2;
     startButton.setInteractive();
     startButton.on('pointerup', () => {
+      this.sound.stopByKey('defeat');
       this.sound.play('bg_music', { loop: true });
       this.scene.start(SCENES.HUD);
       this.scene.start(SCENES.GAME);

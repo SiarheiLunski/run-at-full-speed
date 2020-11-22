@@ -13,11 +13,9 @@ export class HUDScene extends Phaser.Scene {
       [TEXT_ELEMENTS_KEYS.SCORE, this.addText(20, 32, this.getScoreFormatted(), 'white')],
     ]);
 
-    const level = this.scene.get(SCENES.GAME);
-    if (level) {
-      level.events.on(EVENTS.SCORE_CHANGED, this.updateScore, this);
-      level.events.on(EVENTS.DECREASE_LIVES, this.descreaseLives, this);
-    }
+    this.scene.get(SCENES.GAME).events
+      .on(EVENTS.SCORE_CHANGED, this.updateScore, this)
+      .on(EVENTS.DECREASE_LIVES, this.descreaseLives, this);
   }
 
   private updateScore(): void {
@@ -27,11 +25,17 @@ export class HUDScene extends Phaser.Scene {
   private descreaseLives(): void {
     const livesLeft = this.registry.get(TEXT_ELEMENTS_KEYS.LIVES) - 1;
     if (livesLeft === 0) {
+      this.scene.get(SCENES.GAME).events
+        .removeListener(EVENTS.SCORE_CHANGED, this.updateScore, this)
+        .removeListener(EVENTS.DECREASE_LIVES, this.descreaseLives, this);
       this.scene.stop(SCENES.GAME);
       this.scene.start(SCENES.MENU, { score: this.registry.get(REGISTRY_KEYS.SCORE) });
     } else {
       this.registry.set(REGISTRY_KEYS.LIVES, livesLeft);
       this.textElements.get(TEXT_ELEMENTS_KEYS.LIVES)?.setText(`${livesLeft}`);
+      window.setTimeout(() => {
+        this.scene.get(SCENES.GAME).scene.restart();
+      }, 1500);
     }
   }
 

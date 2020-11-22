@@ -169,14 +169,13 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     });
   }
 
-  public gotHit({ onDie }: any): void {
+  public gotHit(): void {
     this.isVulnerable = false;
 
     if (this.hitCounter === 0) {
       // const livesLeft = this.currentScene.registry.get(REGISTRY_KEYS.LIVES);
       // console.log(livesLeft);
       this.isDying = true;
-      this.currentScene.events.emit(EVENTS.DECREASE_LIVES);
       this.hitCounter = 2;
       this.scene.sound.play('lose');
 
@@ -185,8 +184,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       this.body.checkCollision.down = false;
       this.body.checkCollision.left = false;
       this.body.checkCollision.right = false;
-
-      onDie();
+      this.currentScene.events.emit(EVENTS.DECREASE_LIVES);
     } else {
       this.hitCounter -= 1;
       this.scene.sound.play('hit');
