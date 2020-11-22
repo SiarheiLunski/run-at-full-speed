@@ -24,6 +24,7 @@ export class MenuScene extends Phraser.Scene {
   }
 
   private initGlobalDataManager(): void {
+    this.registry.set(REGISTRY_KEYS.LIVES, 3);
     this.registry.set(REGISTRY_KEYS.SCORE, 0);
   }
 }

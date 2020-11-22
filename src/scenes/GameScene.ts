@@ -12,6 +12,11 @@ export class GameScene extends Phraser.Scene {
     super({ key: SCENES.GAME });
   }
 
+  init(): void {
+    Player.initAnimations(this);
+    Enemy.initAnimations(this);
+  }
+
   create(): void {
     this.add.image(0, 0, 'background').setOrigin(0, 0);
     this.ground = this.add.sprite(320, 351, 'ground');
@@ -46,7 +51,7 @@ export class GameScene extends Phraser.Scene {
     this.physics.add.overlap(
       this.player,
       this.enemies,
-      this.handlePlayerEnemyOverlap,
+      this.handlePlayerEnemyOverlap as any,
       undefined,
       this
     );
@@ -56,33 +61,14 @@ export class GameScene extends Phraser.Scene {
     this.player?.update();
   }
   
-  private handlePlayerEnemyOverlap(_player: any, _enemy: any): void {
-    if (_player.body.touching.down && _enemy.body.touching.up) {
-      _player.bounceUpAfterHitEnemyOnHead();
-      this.add.tween({
-        targets: _enemy,
-        props: { alpha: 0 },
-        duration: 1000,
-        ease: 'Power0',
-        yoyo: false,
-        onComplete: function() {
-          _enemy.isDead();
-        }
-      });
-      _enemy.gotHitOnHead();
-      // this.add.tween({
-      //   targets: _enemy,
-      //   props: { alpha: 0 },
-      //   duration: 1000,
-      //   ease: 'Power0',
-      //   yoyo: false,
-      //   onComplete: function() {
-      //     _enemy.isDead();
-      //   }
-      // });
-      _enemy.destroy();
+  private handlePlayerEnemyOverlap(player: Player, enemy: Enemy): void {
+    if (player.body.touching.down && enemy.body.touching.up) {
+      player.bounceUpAfterHitEnemyOnHead();
+      enemy.gotHitOnHead();
     } else {
-      console.log('DEAD');
+      if (player.isVulnerable) {
+        player.gotHit();
+      }
       // player got hit from the side or on the head
       // if (_player.isVulnerable) {
       // _player.gotHit();

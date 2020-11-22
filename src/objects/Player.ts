@@ -1,5 +1,6 @@
 import * as Phraser from 'phaser';
-import { PLAYER_ANIMATIONS } from '../constants';
+import { PLAYER_ANIMATIONS, INPUTS, EVENTS } from '../constants';
+import { PlayerObjectParams } from '../types';
 
 export class Player extends Phaser.Physics.Arcade.Sprite {
   private currentScene: Phraser.Scene
@@ -7,13 +8,56 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   private isJumping: boolean;
   private isDying: boolean;
   private velocity: number;
-
+  public isVulnerable: boolean;
+  private vulnerableCounter: number;
+  private hitCounter: number;
   public body: Phraser.Physics.Arcade.Body;
 
-  constructor(params: any) {
+  static initAnimations(scene: Phaser.Scene): void {
+    scene.anims.create({
+      key: PLAYER_ANIMATIONS.RUN,
+      frameRate: 8,
+      repeat: -1,
+      frames: scene.anims.generateFrameNumbers('player', {
+        start: 6,
+        end: 11
+      })
+    });
+
+    scene.anims.create({
+      key: PLAYER_ANIMATIONS.IDLE,
+      frames: scene.anims.generateFrameNumbers('player', {
+        frames: [0]
+      })
+    });
+
+    scene.anims.create({
+      key: PLAYER_ANIMATIONS.JUMP,
+      frameRate: 8,
+      repeat: -1,
+      frames: scene.anims.generateFrameNumbers('player', {
+        start: 12,
+        end: 17
+      })
+    });
+
+    scene.anims.create({
+      key: PLAYER_ANIMATIONS.LAND,
+      frameRate: 8,
+      repeat: -1,
+      frames: scene.anims.generateFrameNumbers('player', {
+        start: 18,
+        end: 23
+      })
+    });
+  }
+
+  constructor(params: PlayerObjectParams) {
     super(params.scene, params.x, params.y, params.key, params.frame);
 
     this.currentScene = params.scene;
+    this.vulnerableCounter = 100;
+    this.hitCounter = 2;
     this.initSprite();
     this.currentScene.add.existing(this);
   }
@@ -23,48 +67,11 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.setOrigin(0.5, 0.5);
     this.setFlipX(false);
 
-    this.currentScene.anims.create({
-      key: PLAYER_ANIMATIONS.RUN,
-      frameRate: 8,
-      repeat: -1,
-      frames: this.currentScene.anims.generateFrameNumbers('player', {
-        start: 6,
-        end: 11
-      })
-    });
-
-    this.currentScene.anims.create({
-      key: PLAYER_ANIMATIONS.IDLE,
-      frames: this.currentScene.anims.generateFrameNumbers('player', {
-        frames: [0]
-      })
-    });
-
-    this.currentScene.anims.create({
-      key: PLAYER_ANIMATIONS.JUMP,
-      frameRate: 8,
-      repeat: -1,
-      frames: this.currentScene.anims.generateFrameNumbers('player', {
-        start: 12,
-        end: 17
-      })
-    });
-
-    this.currentScene.anims.create({
-      key: PLAYER_ANIMATIONS.LAND,
-      frameRate: 8,
-      repeat: -1,
-      frames: this.currentScene.anims.generateFrameNumbers('player', {
-        start: 18,
-        end: 23
-      })
-    });
-
     this.keys = new Map([
-      ['LEFT', this.addKey('LEFT')],
-      ['RIGHT', this.addKey('RIGHT')],
-      ['DOWN', this.addKey('DOWN')],
-      ['JUMP', this.addKey('UP')]
+      [INPUTS.LEFT, this.addKey(INPUTS.LEFT)],
+      [INPUTS.RIGHT, this.addKey(INPUTS.RIGHT)],
+      [INPUTS.DOWN, this.addKey(INPUTS.DOWN)],
+      [INPUTS.JUMP, this.addKey(INPUTS.JUMP)]
     ]);
 
     this.currentScene.physics.world.enable(this);
@@ -79,6 +86,18 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   update(): void {
     this.handleInput();
     this.handleAnimations();
+    this.checkAndUpdateVulnerability(); 
+  }
+
+  private checkAndUpdateVulnerability() {
+    if (!this.isVulnerable) {
+      if (this.vulnerableCounter > 0) {
+        this.vulnerableCounter -= 1;
+      } else {
+        this.vulnerableCounter = 100;
+        this.isVulnerable = true;
+      }
+    }
   }
 
   private handleInput() {
@@ -90,10 +109,10 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       this.isJumping = false;
     }
 
-    if (this.keys.get('RIGHT')?.isDown) {
+    if (this.keys.get(INPUTS.RIGHT)?.isDown) {
       this.body.velocity.x = this.velocity;
       this.setFlipX(false);
-    } else if (this.keys.get('LEFT')?.isDown) {
+    } else if (this.keys.get(INPUTS.LEFT)?.isDown) {
       this.body.velocity.x = -this.velocity;
       this.setFlipX(true);
     } else {
@@ -101,7 +120,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       this.body.setAccelerationX(0);
     }
 
-    if (this.keys.get('JUMP')?.isDown && !this.isJumping) {
+    if (this.keys.get(INPUTS.JUMP)?.isDown && !this.isJumping) {
       this.body.setVelocityY(-400);
       this.isJumping = true;
     }
@@ -125,7 +144,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  private bounceUpAfterHitEnemyOnHead(): void {
+  public bounceUpAfterHitEnemyOnHead(): void {
     this.currentScene.add.tween({
       targets: this,
       props: { y: this.y - 50 },
@@ -135,21 +154,29 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     });
   }
 
-  protected gotHit(): void {
-    this.isDying = true;
+  public gotHit(): void {
+    this.isVulnerable = false;
 
+    if (this.hitCounter === 0) {
+      console.log('DEAD');
+      this.currentScene.events.emit(EVENTS.DECREASE_LIVES);
+      this.hitCounter = 2;
+    } else {
+      console.log('HIT');
+      this.hitCounter -= 1;
+    }
     // sets acceleration, velocity and speed to zero
     // stop all animations
     this.body.stop();
     this.anims.stop();
 
     // make last dead jump and turn off collision check
-    this.body.setVelocityY(-180);
+    // this.body.setVelocityY(-180);
 
     // this.body.checkCollision.none did not work for me
-    this.body.checkCollision.up = false;
-    this.body.checkCollision.down = false;
-    this.body.checkCollision.left = false;
-    this.body.checkCollision.right = false;
+    // this.body.checkCollision.up = false;
+    // this.body.checkCollision.down = false;
+    // this.body.checkCollision.left = false;
+    // this.body.checkCollision.right = false;
   }
 }

@@ -6,7 +6,22 @@ export const SCENES = {
 };
 
 export const REGISTRY_KEYS = {
-  SCORE: 'SCORE'
+  SCORE: 'SCORE',
+  LIVES: 'LIVES'
+};
+
+export const TEXT_ELEMENTS_KEYS = REGISTRY_KEYS;
+
+export const EVENTS = {
+  SCORE_CHANGED: 'SCORE_CHANGED',
+  DECREASE_LIVES: 'DESCREASE_LIVES'
+};
+
+export const INPUTS = {
+  LEFT: 'LEFT',
+  RIGHT: 'RIGHT',
+  JUMP: 'UP',
+  DOWN: 'DOWN'
 };
 
 export const PLAYER_ANIMATIONS = {
@@ -15,4 +30,8 @@ export const PLAYER_ANIMATIONS = {
   JUMP: 'PLAYER_JUMP',
   LAND: 'PLAYER_LAND',
   DAMAGE: 'PLAYER_DAMAGE'
+};
+
+export const ENEMY_ANIMATIONS = {
+  RUN: 'ENEMY_RUN'
 };
