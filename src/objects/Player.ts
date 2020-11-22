@@ -50,6 +50,16 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
         end: 23
       })
     });
+
+    scene.anims.create({
+      key: PLAYER_ANIMATIONS.DYING,
+      frameRate: 8,
+      repeat: -1,
+      frames: scene.anims.generateFrameNumbers('player', {
+        start: 24,
+        end: 29
+      })
+    });
   }
 
   constructor(params: PlayerObjectParams) {
@@ -127,6 +137,11 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   private handleAnimations() {
+    if (this.isDying) {
+      this.anims.play(PLAYER_ANIMATIONS.DYING, true);
+      return;
+    }
+
     if (this.body.velocity.y !== 0) {
       if (this.body.velocity.y > 0) {
         this.anims.play(PLAYER_ANIMATIONS.LAND, true);
@@ -158,25 +173,23 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.isVulnerable = false;
 
     if (this.hitCounter === 0) {
-      console.log('DEAD');
+      this.isDying = true;
       this.currentScene.events.emit(EVENTS.DECREASE_LIVES);
       this.hitCounter = 2;
+      this.scene.sound.play('lose');
+
+      this.body.setVelocityY(-180);
+      this.body.checkCollision.up = false;
+      this.body.checkCollision.down = false;
+      this.body.checkCollision.left = false;
+      this.body.checkCollision.right = false;
     } else {
-      console.log('HIT');
       this.hitCounter -= 1;
+      this.scene.sound.play('hit');
     }
     // sets acceleration, velocity and speed to zero
     // stop all animations
-    this.body.stop();
-    this.anims.stop();
-
-    // make last dead jump and turn off collision check
-    // this.body.setVelocityY(-180);
-
-    // this.body.checkCollision.none did not work for me
-    // this.body.checkCollision.up = false;
-    // this.body.checkCollision.down = false;
-    // this.body.checkCollision.left = false;
-    // this.body.checkCollision.right = false;
+    // this.body.stop();
+    // this.anims.stop();
   }
 }

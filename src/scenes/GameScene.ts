@@ -65,14 +65,12 @@ export class GameScene extends Phraser.Scene {
     if (player.body.touching.down && enemy.body.touching.up) {
       player.bounceUpAfterHitEnemyOnHead();
       enemy.gotHitOnHead();
-    } else {
-      if (player.isVulnerable) {
-        player.gotHit();
-      }
-      // player got hit from the side or on the head
-      // if (_player.isVulnerable) {
-      // _player.gotHit();
-      // }
+    } else if (player.isVulnerable) {
+      player.gotHit();
     }
+    // player got hit from the side or on the head
+    // if (_player.isVulnerable) {
+    // _player.gotHit();
+    // }
   }
 }
