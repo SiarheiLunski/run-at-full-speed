@@ -9,3 +9,7 @@ type GameObjectParams = {
 export type PlayerObjectParams = GameObjectParams;
 
 export type EnemyObjectParams = { speed: number } & GameObjectParams;
+
+export type MenuSceneParams = {
+  score?: number
+}
