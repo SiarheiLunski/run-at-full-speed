@@ -49,7 +49,6 @@ export class Enemy extends Phraser.GameObjects.Sprite {
 
   public gotHitOnHead(): void {
     this.isDying = true;
-    // this.setFrame(2);
     this.showAndAddScore();
     this.body.setVelocityY(-180);
     this.body.checkCollision.up = false;

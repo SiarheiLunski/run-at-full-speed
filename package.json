@@ -1,7 +1,7 @@
 {
   "name": "run-at-full-speed",
   "version": "1.0.0",
-  "description": "",
+  "description": "Run at full speed and tease olives",
   "main": "index.js",
   "scripts": {
     "start": "parcel serve public/index.html"
@@ -27,8 +27,5 @@
   },
   "dependencies": {
     "phaser": "^3.24.1"
-  },
-  "source": {
-
   }
 }

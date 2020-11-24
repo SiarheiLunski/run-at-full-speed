@@ -1,5 +1,5 @@
 import * as Phraser from 'phaser';
-import { SCENES } from '../constants';
+import { SCENES, MAX_ENEMY_SPEED, MIN_ENEMY_SPEED } from '../constants';
 import { Player } from '../objects/Player';
 import { Enemy } from '../objects/Enemy';
 
@@ -41,14 +41,12 @@ export class GameScene extends Phraser.Scene {
         x: 800, 
         y: 310, 
         key: 'enemy',
-        speed: -(Math.random() * (100 - 50) + 50)
+        speed: -(Math.random() * (MAX_ENEMY_SPEED - MIN_ENEMY_SPEED) + MIN_ENEMY_SPEED)
       }));
-    }, 2000);
+    }, 1500);
 
     this.physics.add.collider(this.ground, this.player);
     this.physics.add.collider(this.ground, this.enemies);
-    // this.physics.add.collider(this.player, this.enemies, (player: any, enemy) => {
-    // });
 
     this.physics.add.overlap(
       this.player,
@@ -77,9 +75,5 @@ export class GameScene extends Phraser.Scene {
     } else if (player.isVulnerable) {
       player.gotHit();
     }
-    // player got hit from the side or on the head
-    // if (_player.isVulnerable) {
-    // _player.gotHit();
-    // }
   }
 }

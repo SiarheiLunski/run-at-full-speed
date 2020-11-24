@@ -77,17 +77,18 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.velocity = 200;
     this.setOrigin(0.5, 0.5);
     this.setFlipX(false);
-
+    
     this.keys = new Map([
       [INPUTS.LEFT, this.addKey(INPUTS.LEFT)],
       [INPUTS.RIGHT, this.addKey(INPUTS.RIGHT)],
       [INPUTS.DOWN, this.addKey(INPUTS.DOWN)],
       [INPUTS.JUMP, this.addKey(INPUTS.JUMP)]
     ]);
-
+    
     this.currentScene.physics.world.enable(this);
     this.body.maxVelocity.x = this.velocity;
     this.body.maxVelocity.y = 400;
+    this.body.setSize(20, 40);
   }
 
   private addKey(key: string): Phaser.Input.Keyboard.Key {
@@ -179,8 +180,6 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.isVulnerable = false;
 
     if (this.hitCounter === 0) {
-      // const livesLeft = this.currentScene.registry.get(REGISTRY_KEYS.LIVES);
-      // console.log(livesLeft);
       this.isDying = true;
       this.hitCounter = 2;
       this.scene.sound.play('lose');
@@ -195,9 +194,5 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       this.hitCounter -= 1;
       this.scene.sound.play('hit');
     }
-    // sets acceleration, velocity and speed to zero
-    // stop all animations
-    // this.body.stop();
-    // this.anims.stop();
   }
 }

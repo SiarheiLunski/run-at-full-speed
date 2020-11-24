@@ -29,10 +29,12 @@ export const PLAYER_ANIMATIONS = {
   RUN: 'PLAYER_RUN',
   JUMP: 'PLAYER_JUMP',
   LAND: 'PLAYER_LAND',
-  // DAMAGE: 'PLAYER_DAMAGE',
   DYING: 'PLAYER_DYING'
 };
 
 export const ENEMY_ANIMATIONS = {
   RUN: 'ENEMY_RUN'
 };
+
+export const MAX_ENEMY_SPEED = 200;
+export const MIN_ENEMY_SPEED = 100;
