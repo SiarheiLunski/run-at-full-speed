@@ -66,6 +66,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     super(params.scene, params.x, params.y, params.key, params.frame);
 
     this.currentScene = params.scene;
+    this.isVulnerable = true;
     this.vulnerableCounter = 100;
     this.hitCounter = 2;
     this.initSprite();
@@ -101,12 +102,17 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
   private checkAndUpdateVulnerability() {
     if (!this.isVulnerable) {
+      if (!this.isDying) {
+        this.alpha = 0.5;
+      }
       if (this.vulnerableCounter > 0) {
         this.vulnerableCounter -= 1;
       } else {
         this.vulnerableCounter = 100;
         this.isVulnerable = true;
       }
+    } else {
+      this.alpha = 1;
     }
   }
 

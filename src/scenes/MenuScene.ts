@@ -17,6 +17,9 @@ export class MenuScene extends Phraser.Scene {
       const scoreText = this.add.bitmapText(0, 90, 'red', `${data.score}`, 36).setCenterAlign();
       scoreTitle.x = this.game.renderer.width / 2 - scoreTitle.width / 2;
       scoreText.x = this.game.renderer.width / 2 - scoreText.width / 2;
+    } else {
+      const logo = this.add.image(20, 50, 'logo').setOrigin(0, 0);
+      logo.x = this.game.renderer.width / 2 - logo.width / 2;
     }
 
     const startButton = this.add.bitmapText(0, 0, 'white', 'Start', 24);

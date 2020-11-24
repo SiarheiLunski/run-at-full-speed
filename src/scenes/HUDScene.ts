@@ -9,8 +9,8 @@ export class HUDScene extends Phaser.Scene {
 
   create(): void {
     this.textElements = new Map([
-      [TEXT_ELEMENTS_KEYS.LIVES, this.addText(20, 8, `${this.registry.get(REGISTRY_KEYS.LIVES)}`, 'red')],
-      [TEXT_ELEMENTS_KEYS.SCORE, this.addText(20, 32, this.getScoreFormatted(), 'white')],
+      [TEXT_ELEMENTS_KEYS.LIVES, this.addText(50, 10, `${this.registry.get(REGISTRY_KEYS.LIVES)}`, 'red')],
+      [TEXT_ELEMENTS_KEYS.SCORE, this.addText(20, 40, this.getScoreFormatted(), 'white')],
     ]);
 
     this.scene.get(SCENES.GAME).events
@@ -28,8 +28,10 @@ export class HUDScene extends Phaser.Scene {
       this.scene.get(SCENES.GAME).events
         .removeListener(EVENTS.SCORE_CHANGED, this.updateScore, this)
         .removeListener(EVENTS.DECREASE_LIVES, this.descreaseLives, this);
-      this.scene.stop(SCENES.GAME);
-      this.scene.start(SCENES.MENU, { score: this.registry.get(REGISTRY_KEYS.SCORE) });
+      window.setTimeout(() => {
+        this.scene.stop(SCENES.GAME);
+        this.scene.start(SCENES.MENU, { score: this.registry.get(REGISTRY_KEYS.SCORE) });
+      }, 1500);
     } else {
       this.registry.set(REGISTRY_KEYS.LIVES, livesLeft);
       this.textElements.get(TEXT_ELEMENTS_KEYS.LIVES)?.setText(`${livesLeft}`);
