@@ -43,7 +43,7 @@ export class Enemy extends Phraser.GameObjects.Sprite {
 
   protected showAndAddScore(): void {
     this.scene.sound.play('score');
-    this.currentScene.events.emit(EVENTS.SCORE_CHANGED, this.dyingScoreValue);
+    this.currentScene.events.emit(EVENTS.UPDATE_SCORE, this.dyingScoreValue);
   }
 
   public gotHitOnHead(): void {
