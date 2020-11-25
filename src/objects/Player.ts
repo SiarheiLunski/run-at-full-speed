@@ -1,16 +1,13 @@
 import * as Phraser from 'phaser';
-import { PLAYER_ANIMATIONS, INPUTS, EVENTS } from '../constants';
+import { PLAYER_ANIMATIONS, INPUTS } from '../constants';
 import { PlayerObjectParams } from '../types';
 
 export class Player extends Phaser.Physics.Arcade.Sprite {
   private currentScene: Phraser.Scene
   private keys: Map<string, Phaser.Input.Keyboard.Key>  
   private isJumping: boolean;
-  private isDying: boolean;
   private velocity: number;
   public isVulnerable: boolean;
-  private vulnerableCounter: number;
-  private hitCounter: number;
   public body: Phraser.Physics.Arcade.Body;
 
   static initAnimations(scene: Phaser.Scene): void {
@@ -66,9 +63,6 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     super(params.scene, params.x, params.y, params.key, params.frame);
 
     this.currentScene = params.scene;
-    this.isVulnerable = true;
-    this.vulnerableCounter = 100;
-    this.hitCounter = 2;
     this.initSprite();
     this.currentScene.add.existing(this);
   }
@@ -98,23 +92,6 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   update(): void {
     this.handleInput();
     this.handleAnimations();
-    this.checkAndUpdateVulnerability(); 
-  }
-
-  private checkAndUpdateVulnerability() {
-    if (!this.isVulnerable) {
-      if (!this.isDying) {
-        this.alpha = 0.5;
-      }
-      if (this.vulnerableCounter > 0) {
-        this.vulnerableCounter -= 1;
-      } else {
-        this.vulnerableCounter = 100;
-        this.isVulnerable = true;
-      }
-    } else {
-      this.alpha = 1;
-    }
   }
 
   private handleInput() {
@@ -144,11 +121,6 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   private handleAnimations() {
-    if (this.isDying) {
-      this.anims.play(PLAYER_ANIMATIONS.DYING, true);
-      return;
-    }
-
     if (this.body.velocity.y !== 0) {
       if (this.body.velocity.y > 0) {
         this.anims.play(PLAYER_ANIMATIONS.LAND, true);
@@ -163,36 +135,6 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       }
     } else {
       this.setFrame(0);
-    }
-  }
-
-  public bounceUpAfterHitEnemyOnHead(): void {
-    this.currentScene.add.tween({
-      targets: this,
-      props: { y: this.y - 50 },
-      duration: 450,
-      ease: 'Power1',
-      yoyo: true
-    });
-  }
-
-  public gotHit(): void {
-    this.isVulnerable = false;
-
-    if (this.hitCounter === 0) {
-      this.isDying = true;
-      this.hitCounter = 2;
-      this.scene.sound.play('lose');
-
-      this.body.setVelocityY(-180);
-      this.body.checkCollision.up = false;
-      this.body.checkCollision.down = false;
-      this.body.checkCollision.left = false;
-      this.body.checkCollision.right = false;
-      this.currentScene.events.emit(EVENTS.DECREASE_LIVES);
-    } else {
-      this.hitCounter -= 1;
-      this.scene.sound.play('hit');
     }
   }
 }

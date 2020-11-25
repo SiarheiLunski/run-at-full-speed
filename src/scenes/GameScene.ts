@@ -46,33 +46,9 @@ export class GameScene extends Phraser.Scene {
 
     this.physics.add.collider(this.ground, this.player);
     this.physics.add.collider(this.ground, this.enemies);
-
-    this.physics.add.overlap(
-      this.player,
-      this.enemies,
-      this.handlePlayerEnemyOverlap as any,
-      undefined,
-      this
-    );
-
-    this.events.on('shutdown', () => {
-      window.clearInterval(this.spawnInterval);
-    });
-    this.events.on('destroy', () => {
-      window.clearInterval(this.spawnInterval);
-    });
   }
 
   update(): void {
     this.player?.update();
-  }
-  
-  private handlePlayerEnemyOverlap(player: Player, enemy: Enemy): void {
-    if (player.body.touching.down && enemy.body.touching.up) {
-      player.bounceUpAfterHitEnemyOnHead();
-      enemy.gotHitOnHead();
-    } else if (player.isVulnerable) {
-      player.gotHit();
-    }
   }
 }
