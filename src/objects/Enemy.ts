@@ -1,5 +1,5 @@
 import * as Phraser from 'phaser';
-import { EVENTS, ENEMY_ANIMATIONS } from '../constants';
+import { ENEMY_ANIMATIONS } from '../constants';
 import { EnemyObjectParams } from '../types';
 
 export class Enemy extends Phraser.GameObjects.Sprite {
@@ -36,10 +36,5 @@ export class Enemy extends Phraser.GameObjects.Sprite {
 
   update(): void {
     this.body.setVelocityX(this.speed);
-  }
-
-  protected showAndAddScore(): void {
-    this.scene.sound.play('score');
-    this.currentScene.events.emit(EVENTS.SCORE_CHANGED);
   }
 }
