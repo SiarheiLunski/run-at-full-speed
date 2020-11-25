@@ -1,26 +1,18 @@
 import * as Phraser from 'phaser';
 import { SCENES, REGISTRY_KEYS } from '../constants';
-import { MenuSceneParams } from '../types';
 
 export class MenuScene extends Phraser.Scene {
   constructor() {
     super({ key: SCENES.MENU });
   }
   
-  create(data: MenuSceneParams): void {
+  create(): void {
     this.initGlobalDataManager();
     this.sound.stopAll();
     this.add.image(0, 0, 'menu_background').setOrigin(0, 0);
-    if (data?.hasOwnProperty('score')) {
-      this.sound.play('defeat');
-      const scoreTitle = this.add.bitmapText(20, 50, 'white', 'Your score', 24);
-      const scoreText = this.add.bitmapText(0, 90, 'red', `${data.score}`, 36).setCenterAlign();
-      scoreTitle.x = this.game.renderer.width / 2 - scoreTitle.width / 2;
-      scoreText.x = this.game.renderer.width / 2 - scoreText.width / 2;
-    } else {
-      const logo = this.add.image(20, 50, 'logo').setOrigin(0, 0);
-      logo.x = this.game.renderer.width / 2 - logo.width / 2;
-    }
+
+    const logo = this.add.image(20, 50, 'logo').setOrigin(0, 0);
+    logo.x = this.game.renderer.width / 2 - logo.width / 2;
 
     const startButton = this.add.bitmapText(0, 0, 'white', 'Start', 24);
     startButton.x = this.game.renderer.width / 2 - startButton.width / 2;
