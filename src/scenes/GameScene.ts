@@ -20,7 +20,6 @@ export class GameScene extends Phraser.Scene {
 
   create(): void {
     this.add.image(0, 0, 'background').setOrigin(0, 0);
-    this.add.image(30, 20, 'heart');
     this.ground = this.add.sprite(320, 351, 'ground');
     this.ground.scaleX = 2;
 
