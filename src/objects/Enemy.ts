@@ -1,5 +1,5 @@
 import * as Phraser from 'phaser';
-import { REGISTRY_KEYS, EVENTS, ENEMY_ANIMATIONS } from '../constants';
+import { EVENTS, ENEMY_ANIMATIONS } from '../constants';
 import { EnemyObjectParams } from '../types';
 
 export class Enemy extends Phraser.GameObjects.Sprite {
@@ -43,8 +43,7 @@ export class Enemy extends Phraser.GameObjects.Sprite {
 
   protected showAndAddScore(): void {
     this.scene.sound.play('score');
-    this.currentScene.registry.values[REGISTRY_KEYS.SCORE] += this.dyingScoreValue;
-    this.currentScene.events.emit(EVENTS.SCORE_CHANGED);
+    this.currentScene.events.emit(EVENTS.SCORE_CHANGED, this.dyingScoreValue);
   }
 
   public gotHitOnHead(): void {

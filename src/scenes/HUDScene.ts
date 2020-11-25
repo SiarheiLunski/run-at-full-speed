@@ -19,7 +19,9 @@ export class HUDScene extends Phaser.Scene {
       .on(EVENTS.DECREASE_LIVES, this.descreaseLives, this);
   }
 
-  private updateScore(): void {
+  private updateScore(dyingScoreValue: number): void {
+    const currentScore = this.registry.get(REGISTRY_KEYS.SCORE);
+    this.registry.set(REGISTRY_KEYS.SCORE, currentScore + dyingScoreValue);
     this.textElements.get(TEXT_ELEMENTS_KEYS.SCORE)?.setText(this.getScoreFormatted());
   }
 
