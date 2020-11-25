@@ -26,7 +26,7 @@ export class LoadScene extends Phraser.Scene {
     this.load.bitmapFont('white', fontsPNG.white, fontsFNT.white);
 
     /* Load all spritesheets from /assets/spritesheets */
-    this.load.spritesheet('player', spritesheets.player as string, {
+    this.load.spritesheet('player', spritesheets.player_black as string, {
       frameWidth: 60,
       frameHeight: 60
     });
