@@ -1,5 +1,5 @@
 import * as Phraser from 'phaser';
-import { PLAYER_ANIMATIONS, INPUTS, EVENTS } from '../constants';
+import { PLAYER_ANIMATIONS, INPUTS } from '../constants';
 import { PlayerObjectParams } from '../types';
 
 export class Player extends Phaser.Physics.Arcade.Sprite {
@@ -189,7 +189,6 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       this.body.checkCollision.down = false;
       this.body.checkCollision.left = false;
       this.body.checkCollision.right = false;
-      this.currentScene.events.emit(EVENTS.DECREASE_LIVES);
     } else {
       this.hitCounter -= 1;
       this.scene.sound.play('hit');

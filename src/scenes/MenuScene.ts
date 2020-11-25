@@ -28,7 +28,6 @@ export class MenuScene extends Phraser.Scene {
     startButton.setInteractive();
     startButton.on('pointerup', () => {
       this.sound.stopByKey('defeat');
-      this.sound.play('bg_music', { loop: true });
       this.scene.start(SCENES.HUD);
       this.scene.start(SCENES.GAME);
       this.scene.bringToTop(SCENES.HUD);

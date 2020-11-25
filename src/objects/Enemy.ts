@@ -1,12 +1,11 @@
 import * as Phraser from 'phaser';
-import { REGISTRY_KEYS, EVENTS, ENEMY_ANIMATIONS } from '../constants';
+import { ENEMY_ANIMATIONS } from '../constants';
 import { EnemyObjectParams } from '../types';
 
 export class Enemy extends Phraser.GameObjects.Sprite {
   private currentScene: Phraser.Scene
   private speed: number;
   public isDying: boolean;
-  private dyingScoreValue: number;
   public body: Phraser.Physics.Arcade.Body;
 
   static initAnimations(scene: Phaser.Scene): void {
@@ -24,7 +23,6 @@ export class Enemy extends Phraser.GameObjects.Sprite {
   constructor(params: EnemyObjectParams) {
     super(params.scene, params.x, params.y, params.key, params.frame);
 
-    this.dyingScoreValue = 10;
     this.speed = params.speed;
     this.currentScene = params.scene;
     this.initSprite();
@@ -43,8 +41,6 @@ export class Enemy extends Phraser.GameObjects.Sprite {
 
   protected showAndAddScore(): void {
     this.scene.sound.play('score');
-    this.currentScene.registry.values[REGISTRY_KEYS.SCORE] += this.dyingScoreValue;
-    this.currentScene.events.emit(EVENTS.SCORE_CHANGED);
   }
 
   public gotHitOnHead(): void {
