@@ -15,20 +15,22 @@ export class HUDScene extends Phaser.Scene {
     ]);
 
     this.scene.get(SCENES.GAME).events
-      .on(EVENTS.SCORE_CHANGED, this.updateScore, this)
-      .on(EVENTS.DECREASE_LIVES, this.descreaseLives, this);
+      .on(EVENTS.UPDATE_SCORE, this.updateScore, this)
+      .on(EVENTS.DECREASE_LIVES, this.decreaseLives, this);
   }
 
-  private updateScore(): void {
+  private updateScore(dyingScoreValue: number): void {
+    const currentScore = this.registry.get(REGISTRY_KEYS.SCORE);
+    this.registry.set(REGISTRY_KEYS.SCORE, currentScore + dyingScoreValue);
     this.textElements.get(TEXT_ELEMENTS_KEYS.SCORE)?.setText(this.getScoreFormatted());
   }
 
-  private descreaseLives(): void {
+  private decreaseLives(): void {
     const livesLeft = this.registry.get(TEXT_ELEMENTS_KEYS.LIVES) - 1;
     if (livesLeft === 0) {
       this.scene.get(SCENES.GAME).events
-        .removeListener(EVENTS.SCORE_CHANGED, this.updateScore, this)
-        .removeListener(EVENTS.DECREASE_LIVES, this.descreaseLives, this);
+        .removeListener(EVENTS.UPDATE_SCORE, this.updateScore, this)
+        .removeListener(EVENTS.DECREASE_LIVES, this.decreaseLives, this);
       window.setTimeout(() => {
         this.scene.stop(SCENES.GAME);
         this.scene.start(SCENES.MENU, { score: this.registry.get(REGISTRY_KEYS.SCORE) });
