@@ -1,16 +1,12 @@
 import * as Phraser from 'phaser';
-import { PLAYER_ANIMATIONS, INPUTS, EVENTS } from '../constants';
+import { PLAYER_ANIMATIONS, INPUTS } from '../constants';
 import { PlayerObjectParams } from '../types';
 
 export class Player extends Phaser.Physics.Arcade.Sprite {
   private currentScene: Phraser.Scene
   private keys: Map<string, Phaser.Input.Keyboard.Key>  
   private isJumping: boolean;
-  private isDying: boolean;
   private velocity: number;
-  public isVulnerable: boolean;
-  private vulnerableCounter: number;
-  private hitCounter: number;
   public body: Phraser.Physics.Arcade.Body;
 
   static initAnimations(scene: Phaser.Scene): void {

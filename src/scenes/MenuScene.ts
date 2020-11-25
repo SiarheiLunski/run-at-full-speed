@@ -8,7 +8,6 @@ export class MenuScene extends Phraser.Scene {
   
   create(): void {
     this.initGlobalDataManager();
-    this.sound.stopAll();
     this.add.image(0, 0, 'menu_background').setOrigin(0, 0);
 
     const logo = this.add.image(20, 50, 'logo').setOrigin(0, 0);
@@ -19,8 +18,6 @@ export class MenuScene extends Phraser.Scene {
     startButton.y = this.game.renderer.height / 2;
     startButton.setInteractive();
     startButton.on('pointerup', () => {
-      this.sound.stopByKey('defeat');
-      this.sound.play('bg_music', { loop: true });
       this.scene.start(SCENES.HUD);
       this.scene.start(SCENES.GAME);
       this.scene.bringToTop(SCENES.HUD);
