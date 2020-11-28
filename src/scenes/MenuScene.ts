@@ -1,8 +1,8 @@
-import * as Phraser from 'phaser';
+import * as Phaser from 'phaser';
 import { SCENES, REGISTRY_KEYS } from '../constants';
 import { MenuSceneParams } from '../types';
 
-export class MenuScene extends Phraser.Scene {
+export class MenuScene extends Phaser.Scene {
   constructor() {
     super({ key: SCENES.MENU });
   }

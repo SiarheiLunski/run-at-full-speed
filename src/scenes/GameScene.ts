@@ -1,9 +1,9 @@
-import * as Phraser from 'phaser';
+import * as Phaser from 'phaser';
 import { SCENES, MAX_ENEMY_SPEED, MIN_ENEMY_SPEED } from '../constants';
 import { Player } from '../objects/Player';
 import { Enemy } from '../objects/Enemy';
 
-export class GameScene extends Phraser.Scene {
+export class GameScene extends Phaser.Scene {
   private player: Player;
   private ground: Phaser.GameObjects.Sprite;
   private enemies: Phaser.GameObjects.Group;

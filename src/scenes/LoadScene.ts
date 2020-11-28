@@ -1,4 +1,4 @@
-import * as Phraser from 'phaser';
+import * as Phaser from 'phaser';
 import { SCENES } from '../constants';
 
 import images from '../../public/assets/images/*.png';
@@ -6,7 +6,7 @@ import audio from '../../public/assets/audio/*.mp3';
 import spritesheets from '../../public/assets/spritesheets/*.png';
 import fontsPNG from '../../public/assets/fonts/*.png';
 import fontsFNT from '../../public/assets/fonts/*.fnt';
-export class LoadScene extends Phraser.Scene {
+export class LoadScene extends Phaser.Scene {
   constructor() {
     super({ key: SCENES.LOAD });
   }
@@ -26,7 +26,7 @@ export class LoadScene extends Phraser.Scene {
     this.load.bitmapFont('white', fontsPNG.white, fontsFNT.white);
 
     /* Load all spritesheets from /assets/spritesheets */
-    this.load.spritesheet('player', spritesheets.player_black as string, {
+    this.load.spritesheet('player', spritesheets.player as string, {
       frameWidth: 60,
       frameHeight: 60
     });

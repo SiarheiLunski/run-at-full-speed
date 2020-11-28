@@ -1,13 +1,13 @@
-import * as Phraser from 'phaser';
+import * as Phaser from 'phaser';
 import { EVENTS, ENEMY_ANIMATIONS } from '../constants';
 import { EnemyObjectParams } from '../types';
 
-export class Enemy extends Phraser.GameObjects.Sprite {
-  private currentScene: Phraser.Scene
+export class Enemy extends Phaser.GameObjects.Sprite {
+  private currentScene: Phaser.Scene
   private speed: number;
   public isDying: boolean;
   private dyingScoreValue: number;
-  public body: Phraser.Physics.Arcade.Body;
+  public body: Phaser.Physics.Arcade.Body;
 
   static initAnimations(scene: Phaser.Scene): void {
     scene.anims.create({

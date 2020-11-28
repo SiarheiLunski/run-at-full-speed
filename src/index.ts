@@ -1,4 +1,4 @@
-import * as Phraser from 'phaser';
+import * as Phaser from 'phaser';
 import { LoadScene } from './scenes/LoadScene';
 import { MenuScene } from './scenes/MenuScene';
 import { HUDScene } from './scenes/HUDScene';
@@ -24,4 +24,4 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
   render: { pixelArt: true, antialias: false }
 };
 
-export const game = new Phraser.Game(gameConfig);
+export const game = new Phaser.Game(gameConfig);
